@@ -11,8 +11,8 @@ const SECRET_KEY = dotenv.parsed.SECRET_KEY;
 const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!user || !user.comparePassword(password)) {
-    throw new Unauthorized("Email or password is wrong");
+  if (!user || !user.verify || !user.comparePassword(password)) {
+    throw new Unauthorized("Email is wrong or not verify, or password is wrong");
   }
   // const passCompare = bcrypt.compareSync(password.user.password);
   // if (!user || !passCompare) {
